@@ -103,14 +103,3 @@ The **USA** accounts for 174K movies, 3.8x more than second-place France (46K). 
 Among the top 15 producing countries, **USSR** and **Japan** rate highest (3.62 and 3.43 respectively), the USSR figure likely reflects survivorship bias (only notable Soviet films are cataloged). **Canada** and **USA** rate lowest (~3.08 and 3.15). This may reflect the sheer volume of low-budget productions from English-speaking countries in the database.
 
 ![Rating by Country](plots/14_rating_by_country.png)
-
----
-
-## 4. Pre-processing Recommendations
-
-1. **Filter runtime outliers** — movies > 300 min (0.9%) are likely errors. Short films (< 30 min) may also need separation (36.8% of entries).
-2. **Cast `date` to integer** — currently stored as float.
-3. **Handle unrated movies** — 90.3% have no rating; keep or drop depending on analysis goal.
-4. **Drop `tagline`** — 85% missing.
-5. **Consider dropping `themes`** — only 2.6% coverage.
-6. **Actor `role` column** — 23.5% null; prefer `name` for analysis.
