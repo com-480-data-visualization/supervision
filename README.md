@@ -6,6 +6,7 @@
 | Néhémie Piero Frei | 346850 |
 | Adrian Martinez Lopez| 396379 |
 | Clara Irina Hamousz | 326814 | 
+| Arthur Taieb | 361195 |
 
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
