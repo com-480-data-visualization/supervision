@@ -66,8 +66,7 @@ The dataset contains **941,597 movies** from Letterboxd organized in a star sche
 
 ---
 
-
-This is a really short EDA showing only the core features of the dataset. A more detailed EDA can be found in extended_EDA.md.
+This is a really short EDA showing only the core features of the dataset. A more detailed EDA can be found in [extended_EDA.md](extended_EDA.md).
 
 
 ## 2. Data Quality & Missing Values
