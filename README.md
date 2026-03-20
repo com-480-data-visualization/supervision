@@ -3,7 +3,7 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| | |
+| Néhémie Piero Frei | 346850 |
 | Adrian Martinez Lopez| 396379 |
 | | |
 
