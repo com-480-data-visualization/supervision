@@ -182,13 +182,11 @@ The **USA** accounts for 174K movies, 3.8x more than France in the second place 
 
 ### Related work
 
+Beyond personal analytics dashboards (tools that visualize a single user's watch history in terms of top genres, favorite directors, or rating habits), the most notable existing uses of this specific dataset are two Kaggle notebooks: "What the World be Watchin?" by Mike DeLong, which produces geographic visualizations: showing movie production counts and dominant genres by country, and "Classify genre using posters" by スワミ, which uses poster images for ML-based genre classification. More broadly, film network analysis is a well-studied area: the Hollywood co-stardom graph (where actors are linked by films they share) has been explored since Watts & Strogatz (1998) and has been visualized using tools like Gephi and Sigma.js. On the poster side, Vijay Pandurangan's 2012 project analyzed color trends across 35,000 movie posters over time. However, all of these remain static, single-dimension analyses with no interactive or narrative component.
 
+Our approach is original in that we combine four different lenses on the same large-scale dataset: geographic, temporal, social, and visual, in a single interactive experience. We want to go beyond ranking top countries or genres, and instead make world cinema genuinely discoverable: surfacing lesser-known national cinemas, showing how genres have emerged and spread across the world map over decades, highlighting how filmmaking has structurally changed over time, mapping the collaborative networks that define artistic movements, and exploring how poster aesthetics have shifted across eras and genres.
 
-
-> - What others have already done with the data?
-> - Why is your approach original?
-> - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
-> - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+For design inspiration, we look to [The Pudding](https://pudding.cool) for its storytelling approach, and to [Gapminder](https://www.gapminder.org) and [Information is Beautiful](https://informationisbeautiful.net) for the idea of animated, interactive charts that make complex temporal data (more) intuitive. For the network component, we draw inspiration from existing Hollywood collaboration graph visualizations, which we aim to extend to the full dataset including non English and lesser-known cinema.
 
 
 ## Milestone 2 (17th April, 5pm)
