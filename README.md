@@ -195,7 +195,7 @@ For design inspiration, we look to [The Pudding](https://pudding.cool) for its s
 
 **10% of the final grade**
 
-
+[Website](https://github.com/com-480-data-visualization/supervision/tree/master/letterboxd_website)
 
 
 ## Milestone 3 (29th May, 5pm)
