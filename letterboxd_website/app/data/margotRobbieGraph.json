@@ -1,0 +1,649 @@
+{
+  "meta": {
+    "target": "Margot Robbie",
+    "totalFilms": 39,
+    "generatedAt": "2026-04-17T09:50:46.741Z"
+  },
+  "nodes": [
+    {
+      "id": "margot-robbie",
+      "name": "Margot Robbie",
+      "role": "center",
+      "sharedFilms": null,
+      "films": [
+        {
+          "id": "1000163",
+          "name": "Asteroid City",
+          "year": 2023,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/6/6/8/5/5/5/668555-asteroid-city-0-230-0-345-crop.jpg?v=700bea7fd5"
+        },
+        {
+          "id": "1000001",
+          "name": "Barbie",
+          "year": 2023,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/7/7/0/6/4/277064-barbie-0-230-0-345-crop.jpg?v=1b83dc7a71"
+        },
+        {
+          "id": "1385265",
+          "name": "Becoming Barbie",
+          "year": 2023,
+          "poster": null
+        },
+        {
+          "id": "1422775",
+          "name": "Hollywood's Hard Hitters: Women in Action",
+          "year": 2023,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/1/5/0/3/3/8/1150338-hollywood-s-hard-hitters-women-in-action-0-230-0-345-crop.jpg?v=977bae4ca7"
+        },
+        {
+          "id": "1001079",
+          "name": "Amsterdam",
+          "year": 2022,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/5/8/9/3/1/7/589317-amsterdam-0-230-0-345-crop.jpg?v=92e1cb7cab"
+        },
+        {
+          "id": "1000183",
+          "name": "Babylon",
+          "year": 2022,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/5/4/2/7/7/3/542773-babylon-0-230-0-345-crop.jpg?v=aab2f01937"
+        },
+        {
+          "id": "1007992",
+          "name": "Peter Rabbit 2: The Runaway",
+          "year": 2021,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/2/1/3/4/452134-peter-rabbit-2-the-runaway-0-230-0-345-crop.jpg?v=39e438a993"
+        },
+        {
+          "id": "1000207",
+          "name": "The Suicide Squad",
+          "year": 2021,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/6/9/8/3/5/369835-the-suicide-squad-0-230-0-345-crop.jpg?v=8503fd610a"
+        },
+        {
+          "id": "1000379",
+          "name": "Birds of Prey (and the Fantabulous Emancipation of One Harley Quinn)",
+          "year": 2020,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/2/6/1/3/1/426131-birds-of-prey-and-the-fantabulous-emancipation-of-one-har-0-230-0-345-crop.jpg?v=e326912be2"
+        },
+        {
+          "id": "1022967",
+          "name": "Joker: Put on a Happy Face",
+          "year": 2020,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/6/5/6/8/4/3/656843-joker-put-on-a-happy-face-0-230-0-345-crop.jpg?v=f96606c246"
+        },
+        {
+          "id": "1001558",
+          "name": "Bombshell",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/5/1/2/1/455121-bombshell-0-230-0-345-crop.jpg?v=bc93f2df01"
+        },
+        {
+          "id": "1010335",
+          "name": "Dreamland",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/1/1/3/1/9/411319-dreamland-0-230-0-345-crop.jpg?v=5620eedaed"
+        },
+        {
+          "id": "1000033",
+          "name": "Once Upon a Time… in Hollywood",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/9/7/8/5/9/397859-once-upon-a-time-in-hollywood-0-230-0-345-crop.jpg?v=f3e8612854"
+        },
+        {
+          "id": "1051306",
+          "name": "Flopsy Turvy",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/0/8/6/1/450861-flopsy-turvy-0-230-0-345-crop.jpg?v=ead7d94688"
+        },
+        {
+          "id": "1002627",
+          "name": "Mary Queen of Scots",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/15/8j/li/ix/b5RMzLAyq5QW6GtN9sIeAEMLlBI-0-230-0-345-crop.jpg?v=f04e96c892"
+        },
+        {
+          "id": "1003926",
+          "name": "Peter Rabbit",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/vq/y0/uo/cv/2yjSvEDuM3rLDng40erLsWkQRfn-0-230-0-345-crop.jpg?v=0871297631"
+        },
+        {
+          "id": "1008708",
+          "name": "Slaughterhouse Rulez",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/8/9/8/7/8/389878-slaughterhouse-rulez-0-230-0-345-crop.jpg?v=4473838118"
+        },
+        {
+          "id": "1007408",
+          "name": "Terminal",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/2/0/1/5/8/320158-terminal-0-230-0-345-crop.jpg?v=55b27774d4"
+        },
+        {
+          "id": "1007111",
+          "name": "Goodbye Christopher Robin",
+          "year": 2017,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/5/2/4/9/4/352494-goodbye-christopher-robin-0-230-0-345-crop.jpg?v=26aafca04c"
+        },
+        {
+          "id": "1000228",
+          "name": "I, Tonya",
+          "year": 2017,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/hv/nn/05/ss/d20vOJpywFDoz7Dd4ChomGdP0fr-0-230-0-345-crop.jpg?v=836521d1aa"
+        },
+        {
+          "id": "1013480",
+          "name": "Australian Psycho",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/4/2/8/9/3/342893-australian-psycho-0-230-0-345-crop.jpg?v=7799dae18e"
+        },
+        {
+          "id": "1000291",
+          "name": "Suicide Squad",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/t0/3y/yr/rs/n3rm3gxguxzFDlygpROV7RHbELe-0-230-0-345-crop.jpg?v=67909d635e"
+        },
+        {
+          "id": "1003215",
+          "name": "The Legend of Tarzan",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/8/2/1/7/4/182174-the-legend-of-tarzan-0-230-0-345-crop.jpg?v=dadaa706fa"
+        },
+        {
+          "id": "1558410",
+          "name": "The Warrior, The Myth, The Wonder",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/1/7/9/1/9/3/1179193-the-warrior-the-myth-the-wonder-0-230-0-345-crop.jpg?v=bdefc86f36"
+        },
+        {
+          "id": "1006571",
+          "name": "Whiskey Tango Foxtrot",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/0/3/8/7/9/203879-whiskey-tango-foxtrot-0-230-0-345-crop.jpg?v=3447e44b18"
+        },
+        {
+          "id": "1001672",
+          "name": "Focus",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/8/0/4/1/4/180414-focus-0-230-0-345-crop.jpg?v=4690dae367"
+        },
+        {
+          "id": "1359259",
+          "name": "Neighbours 30th: The Stars Reunite",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/1/1/1/9/5/1/1111951-neighbours-30th-the-stars-reunite-0-230-0-345-crop.jpg?v=8a131519b2"
+        },
+        {
+          "id": "1000340",
+          "name": "The Big Short",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/4/6/0/1/3/246013-the-big-short-0-230-0-345-crop.jpg?v=53fc881989"
+        },
+        {
+          "id": "1009397",
+          "name": "Z for Zachariah",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/3/9/1/8/7/139187-z-for-zachariah-0-230-0-345-crop.jpg?v=222cc2617c"
+        },
+        {
+          "id": "1009918",
+          "name": "Suite Française",
+          "year": 2014,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/1h/77/7m/sz/4lMmrBRNwMXC9KSaj1Kw6M9MSCm-0-230-0-345-crop.jpg?v=7c862b0014"
+        },
+        {
+          "id": "1000263",
+          "name": "About Time",
+          "year": 2013,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/uo/th/yf/uz/zSuh8dGwqpsWR7ccvYbfxbSZ37o-0-230-0-345-crop.jpg?v=7276b6e978"
+        },
+        {
+          "id": "1000025",
+          "name": "The Wolf of Wall Street",
+          "year": 2013,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/8/6/1/1/4/86114-the-wolf-of-wall-street-0-230-0-345-crop.jpg?v=9fd1891260"
+        },
+        {
+          "id": "1057481",
+          "name": "I.C.U.",
+          "year": 2009,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/9/7/0/4970-i-c-u--0-230-0-345-crop.jpg?v=8586cf3e78"
+        },
+        {
+          "id": "1077807",
+          "name": "Vigilante",
+          "year": 2008,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/6/7/1/8/1/167181-vigilante-0-230-0-345-crop.jpg?v=9cb0c1eb34"
+        },
+        {
+          "id": "1046537",
+          "name": "A Big Bold Beautiful Journey",
+          "year": null,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/1/2/4/8/8/6/1124886-a-big-bold-beautiful-journey-0-230-0-345-crop.jpg?v=5c9db674e9"
+        },
+        {
+          "id": "1133046",
+          "name": "Avengelyne",
+          "year": null,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/1/5/3/3/8/7/1153387-avengelyne-0-230-0-345-crop.jpg?v=f8f4dfe51f"
+        },
+        {
+          "id": "1026183",
+          "name": "Ocean's",
+          "year": null,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/8/8/0/0/9/8/880098-ocean-s-0-230-0-345-crop.jpg?v=a5f0c512c1"
+        },
+        {
+          "id": "1068395",
+          "name": "Tank Girl",
+          "year": null,
+          "poster": null
+        },
+        {
+          "id": "1297671",
+          "name": "Untitled Pirates of the Caribbean Spin-Off",
+          "year": null,
+          "poster": null
+        }
+      ]
+    },
+    {
+      "id": "domhnall-gleeson",
+      "name": "Domhnall Gleeson",
+      "role": "actor",
+      "sharedFilms": 4,
+      "films": [
+        {
+          "id": "1007992",
+          "name": "Peter Rabbit 2: The Runaway",
+          "year": 2021,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/2/1/3/4/452134-peter-rabbit-2-the-runaway-0-230-0-345-crop.jpg?v=39e438a993"
+        },
+        {
+          "id": "1003926",
+          "name": "Peter Rabbit",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/vq/y0/uo/cv/2yjSvEDuM3rLDng40erLsWkQRfn-0-230-0-345-crop.jpg?v=0871297631"
+        },
+        {
+          "id": "1007111",
+          "name": "Goodbye Christopher Robin",
+          "year": 2017,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/5/2/4/9/4/352494-goodbye-christopher-robin-0-230-0-345-crop.jpg?v=26aafca04c"
+        },
+        {
+          "id": "1000263",
+          "name": "About Time",
+          "year": 2013,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/uo/th/yf/uz/zSuh8dGwqpsWR7ccvYbfxbSZ37o-0-230-0-345-crop.jpg?v=7276b6e978"
+        }
+      ]
+    },
+    {
+      "id": "brad-pitt",
+      "name": "Brad Pitt",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1000183",
+          "name": "Babylon",
+          "year": 2022,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/5/4/2/7/7/3/542773-babylon-0-230-0-345-crop.jpg?v=aab2f01937"
+        },
+        {
+          "id": "1000033",
+          "name": "Once Upon a Time… in Hollywood",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/9/7/8/5/9/397859-once-upon-a-time-in-hollywood-0-230-0-345-crop.jpg?v=f3e8612854"
+        },
+        {
+          "id": "1000340",
+          "name": "The Big Short",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/4/6/0/1/3/246013-the-big-short-0-230-0-345-crop.jpg?v=53fc881989"
+        }
+      ]
+    },
+    {
+      "id": "christian-bale",
+      "name": "Christian Bale",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1001079",
+          "name": "Amsterdam",
+          "year": 2022,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/5/8/9/3/1/7/589317-amsterdam-0-230-0-345-crop.jpg?v=92e1cb7cab"
+        },
+        {
+          "id": "1022967",
+          "name": "Joker: Put on a Happy Face",
+          "year": 2020,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/6/5/6/8/4/3/656843-joker-put-on-a-happy-face-0-230-0-345-crop.jpg?v=f96606c246"
+        },
+        {
+          "id": "1000340",
+          "name": "The Big Short",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/4/6/0/1/3/246013-the-big-short-0-230-0-345-crop.jpg?v=53fc881989"
+        }
+      ]
+    },
+    {
+      "id": "elizabeth-debicki",
+      "name": "Elizabeth Debicki",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1007992",
+          "name": "Peter Rabbit 2: The Runaway",
+          "year": 2021,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/2/1/3/4/452134-peter-rabbit-2-the-runaway-0-230-0-345-crop.jpg?v=39e438a993"
+        },
+        {
+          "id": "1051306",
+          "name": "Flopsy Turvy",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/0/8/6/1/450861-flopsy-turvy-0-230-0-345-crop.jpg?v=ead7d94688"
+        },
+        {
+          "id": "1003926",
+          "name": "Peter Rabbit",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/vq/y0/uo/cv/2yjSvEDuM3rLDng40erLsWkQRfn-0-230-0-345-crop.jpg?v=0871297631"
+        }
+      ]
+    },
+    {
+      "id": "james-corden",
+      "name": "James Corden",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1007992",
+          "name": "Peter Rabbit 2: The Runaway",
+          "year": 2021,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/2/1/3/4/452134-peter-rabbit-2-the-runaway-0-230-0-345-crop.jpg?v=39e438a993"
+        },
+        {
+          "id": "1051306",
+          "name": "Flopsy Turvy",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/0/8/6/1/450861-flopsy-turvy-0-230-0-345-crop.jpg?v=ead7d94688"
+        },
+        {
+          "id": "1003926",
+          "name": "Peter Rabbit",
+          "year": 2018,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/vq/y0/uo/cv/2yjSvEDuM3rLDng40erLsWkQRfn-0-230-0-345-crop.jpg?v=0871297631"
+        }
+      ]
+    },
+    {
+      "id": "kate-mckinnon",
+      "name": "Kate McKinnon",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1000001",
+          "name": "Barbie",
+          "year": 2023,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/7/7/0/6/4/277064-barbie-0-230-0-345-crop.jpg?v=1b83dc7a71"
+        },
+        {
+          "id": "1001558",
+          "name": "Bombshell",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/5/1/2/1/455121-bombshell-0-230-0-345-crop.jpg?v=bc93f2df01"
+        },
+        {
+          "id": "1068395",
+          "name": "Tank Girl",
+          "year": null,
+          "poster": null
+        }
+      ]
+    },
+    {
+      "id": "p-j-byrne",
+      "name": "P.J. Byrne",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1000183",
+          "name": "Babylon",
+          "year": 2022,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/5/4/2/7/7/3/542773-babylon-0-230-0-345-crop.jpg?v=aab2f01937"
+        },
+        {
+          "id": "1001558",
+          "name": "Bombshell",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/5/1/2/1/455121-bombshell-0-230-0-345-crop.jpg?v=bc93f2df01"
+        },
+        {
+          "id": "1000025",
+          "name": "The Wolf of Wall Street",
+          "year": 2013,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/8/6/1/1/4/86114-the-wolf-of-wall-street-0-230-0-345-crop.jpg?v=9fd1891260"
+        }
+      ]
+    },
+    {
+      "id": "ryan-gosling",
+      "name": "Ryan Gosling",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1000001",
+          "name": "Barbie",
+          "year": 2023,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/7/7/0/6/4/277064-barbie-0-230-0-345-crop.jpg?v=1b83dc7a71"
+        },
+        {
+          "id": "1000340",
+          "name": "The Big Short",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/4/6/0/1/3/246013-the-big-short-0-230-0-345-crop.jpg?v=53fc881989"
+        },
+        {
+          "id": "1026183",
+          "name": "Ocean's",
+          "year": null,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/8/8/0/0/9/8/880098-ocean-s-0-230-0-345-crop.jpg?v=a5f0c512c1"
+        }
+      ]
+    },
+    {
+      "id": "viola-davis",
+      "name": "Viola Davis",
+      "role": "actor",
+      "sharedFilms": 3,
+      "films": [
+        {
+          "id": "1000207",
+          "name": "The Suicide Squad",
+          "year": 2021,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/6/9/8/3/5/369835-the-suicide-squad-0-230-0-345-crop.jpg?v=8503fd610a"
+        },
+        {
+          "id": "1000291",
+          "name": "Suicide Squad",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/sm/upload/t0/3y/yr/rs/n3rm3gxguxzFDlygpROV7RHbELe-0-230-0-345-crop.jpg?v=67909d635e"
+        },
+        {
+          "id": "1558410",
+          "name": "The Warrior, The Myth, The Wonder",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/1/7/9/1/9/3/1179193-the-warrior-the-myth-the-wonder-0-230-0-345-crop.jpg?v=bdefc86f36"
+        }
+      ]
+    },
+    {
+      "id": "adam-west",
+      "name": "Adam West",
+      "role": "actor",
+      "sharedFilms": 2,
+      "films": [
+        {
+          "id": "1022967",
+          "name": "Joker: Put on a Happy Face",
+          "year": 2020,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/6/5/6/8/4/3/656843-joker-put-on-a-happy-face-0-230-0-345-crop.jpg?v=f96606c246"
+        },
+        {
+          "id": "1000033",
+          "name": "Once Upon a Time… in Hollywood",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/3/9/7/8/5/9/397859-once-upon-a-time-in-hollywood-0-230-0-345-crop.jpg?v=f3e8612854"
+        }
+      ]
+    },
+    {
+      "id": "aash-aaron",
+      "name": "Aash Aaron",
+      "role": "director",
+      "sharedFilms": 2,
+      "films": [
+        {
+          "id": "1057481",
+          "name": "I.C.U.",
+          "year": 2009,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/9/7/0/4970-i-c-u--0-230-0-345-crop.jpg?v=8586cf3e78"
+        },
+        {
+          "id": "1077807",
+          "name": "Vigilante",
+          "year": 2008,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/6/7/1/8/1/167181-vigilante-0-230-0-345-crop.jpg?v=9cb0c1eb34"
+        }
+      ]
+    },
+    {
+      "id": "glenn-ficarra",
+      "name": "Glenn Ficarra",
+      "role": "director",
+      "sharedFilms": 2,
+      "films": [
+        {
+          "id": "1006571",
+          "name": "Whiskey Tango Foxtrot",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/0/3/8/7/9/203879-whiskey-tango-foxtrot-0-230-0-345-crop.jpg?v=3447e44b18"
+        },
+        {
+          "id": "1001672",
+          "name": "Focus",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/8/0/4/1/4/180414-focus-0-230-0-345-crop.jpg?v=4690dae367"
+        }
+      ]
+    },
+    {
+      "id": "jay-roach",
+      "name": "Jay Roach",
+      "role": "director",
+      "sharedFilms": 2,
+      "films": [
+        {
+          "id": "1001558",
+          "name": "Bombshell",
+          "year": 2019,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/4/5/5/1/2/1/455121-bombshell-0-230-0-345-crop.jpg?v=bc93f2df01"
+        },
+        {
+          "id": "1026183",
+          "name": "Ocean's",
+          "year": null,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/8/8/0/0/9/8/880098-ocean-s-0-230-0-345-crop.jpg?v=a5f0c512c1"
+        }
+      ]
+    },
+    {
+      "id": "john-requa",
+      "name": "John Requa",
+      "role": "director",
+      "sharedFilms": 2,
+      "films": [
+        {
+          "id": "1006571",
+          "name": "Whiskey Tango Foxtrot",
+          "year": 2016,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/2/0/3/8/7/9/203879-whiskey-tango-foxtrot-0-230-0-345-crop.jpg?v=3447e44b18"
+        },
+        {
+          "id": "1001672",
+          "name": "Focus",
+          "year": 2015,
+          "poster": "https://a.ltrbxd.com/resized/film-poster/1/8/0/4/1/4/180414-focus-0-230-0-345-crop.jpg?v=4690dae367"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "margot-robbie",
+      "target": "domhnall-gleeson"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "brad-pitt"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "christian-bale"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "elizabeth-debicki"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "james-corden"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "kate-mckinnon"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "p-j-byrne"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "ryan-gosling"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "viola-davis"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "adam-west"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "aash-aaron"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "glenn-ficarra"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "jay-roach"
+    },
+    {
+      "source": "margot-robbie",
+      "target": "john-requa"
+    }
+  ]
+}

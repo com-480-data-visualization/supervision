@@ -1,0 +1,23 @@
+{
+  "name": "letterboxd_website",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "build:graph": "node scripts/build-actor-graph.mjs"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.2",
+    "@nuxt/fonts": "^0.14.0",
+    "@nuxt/icon": "^2.2.1",
+    "d3": "^7.9.0",
+    "globe.gl": "^2.45.3",
+    "nuxt": "^4.4.2",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4"
+  }
+}
