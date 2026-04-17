@@ -196,6 +196,7 @@ For design inspiration, we look to [The Pudding](https://pudding.cool) for its s
 **10% of the final grade**
 
 [Website](https://github.com/com-480-data-visualization/supervision/tree/master/letterboxd_website)
+
 [Report](https://github.com/com-480-data-visualization/supervision/blob/master/M2_Letterboxd.pdf)
 
 
