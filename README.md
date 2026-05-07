@@ -1,5 +1,7 @@
 # Project of Data Visualization (COM-480)
 
+ROCK ON !
+
 
 | Student's name | SCIPER |
 | -------------- | ------ |
