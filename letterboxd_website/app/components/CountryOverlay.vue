@@ -10,7 +10,14 @@
               <h1 class="editorial-title">{{ countryProps?.ADMIN || 'Unknown' }}</h1>
             </div>
           </div>
-          <button class="close-button" @click="close" aria-label="Close">×</button>
+          <div class="header-right">
+            <div class="sort-controls">
+              <span class="sort-label">Sort</span>
+              <button class="sort-btn" :class="{ active: sortField === 'rating' }" @click="setSort('rating')">Rating {{ sortField === 'rating' ? (sortDir === 'desc' ? '↓' : '↑') : '↓' }}</button>
+              <button class="sort-btn" :class="{ active: sortField === 'date' }"   @click="setSort('date')">Year {{ sortField === 'date' ? (sortDir === 'desc' ? '↓' : '↑') : '↓' }}</button>
+            </div>
+            <button class="close-button" @click="close" aria-label="Close">×</button>
+          </div>
         </header>
 
         <div class="modal-body">
@@ -18,7 +25,7 @@
           <p v-if="movies.length === 0 && loading" class="empty">Loading films…</p>
 
           <ol class="movie-list">
-            <li v-for="movie in movies" :key="movie.id" class="movie-row">
+            <li v-for="movie in sortedMovies" :key="movie.id" class="movie-row">
               <div class="movie-year">{{ movie.date || '—' }}</div>
               <div class="movie-meta">
                 <div class="movie-title">{{ movie.name }}</div>
@@ -104,6 +111,27 @@ watch(() => props.isVisible, (newVal) => {
 const close = () => {
   emit('close')
 }
+
+// --- SORT LOGIC ---
+const sortField = ref('rating')
+const sortDir = ref('desc')
+
+const setSort = (field) => {
+  if (sortField.value === field) {
+    sortDir.value = sortDir.value === 'desc' ? 'asc' : 'desc'
+  } else {
+    sortField.value = field
+    sortDir.value = 'desc'
+  }
+}
+
+const sortedMovies = computed(() => {
+  return [...movies.value].sort((a, b) => {
+    const av = a[sortField.value] ?? 0
+    const bv = b[sortField.value] ?? 0
+    return sortDir.value === 'desc' ? bv - av : av - bv
+  })
+})
 </script>
 
 
@@ -236,6 +264,30 @@ const close = () => {
   border-bottom: 1px solid var(--accent);
 }
 .more-button:disabled { color: var(--ink-faint); border-color: var(--ink-faint); cursor: wait; }
+
+.header-right { display: flex; align-items: center; gap: 16px; }
+
+.sort-controls { display: flex; align-items: center; gap: 6px; }
+
+.sort-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-right: 2px;
+}
+
+.sort-btn {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+.sort-btn:hover { color: var(--ink); background: var(--accent-soft); }
+.sort-btn.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
 
 /* Transition */
 .fade-enter-active, .fade-leave-active { transition: opacity 0.25s ease; }
