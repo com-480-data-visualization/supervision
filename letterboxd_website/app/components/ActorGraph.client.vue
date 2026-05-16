@@ -1,6 +1,18 @@
 <template>
   <div class="actor-graph-wrapper">
+    <header class="page-header">
+      <div class="eyebrow">No. 003 · Constellation</div>
+      <h1 class="editorial-title">
+        {{ targetName }}<em class="emph">, and {{ totalFilmsWord }} films</em>
+      </h1>
+      <p class="lede">
+        {{ collaboratorCount }} names map this constellation — the actors and directors
+        who have shared a frame with them.
+      </p>
+    </header>
+
     <svg ref="svgEl" class="actor-graph-svg"></svg>
+
     <div
       v-if="tooltip.visible"
       class="actor-tooltip"
@@ -11,31 +23,24 @@
       <div class="tooltip-meta">{{ tooltip.sharedLabel }}</div>
     </div>
 
-    <div class="legend">
-      <div class="legend-row">
-        <span class="legend-dot legend-actor"></span> Co-actor
+    <footer class="page-footer">
+      <div class="legend">
+        <span><span class="legend-dot legend-actor"></span>Actor</span>
+        <span><span class="legend-dot legend-director"></span>Director</span>
       </div>
-      <div class="legend-row">
-        <span class="legend-dot legend-director"></span> Director
-      </div>
-    </div>
+      <div class="totals">{{ collaboratorCount }} collaborators · {{ totalFilms }} films</div>
+    </footer>
 
     <Transition name="sidebar">
       <aside v-if="selected" class="sidebar" @click.stop>
-        <button class="sidebar-close" @click="selected = null" aria-label="Close">✕</button>
-        <div class="sidebar-role">{{ roleLabel(selected.role) }}</div>
-        <h2 class="sidebar-name" :style="{ color: COLORS[selected.role] }">{{ selected.name }}</h2>
+        <button class="sidebar-close" @click="selected = null" aria-label="Close">×</button>
+        <div class="sidebar-role eyebrow">{{ roleLabel(selected.role) }}</div>
+        <h2 class="sidebar-name editorial-title">{{ selected.name }}</h2>
         <div class="sidebar-subtitle">{{ subtitleFor(selected) }}</div>
         <ul class="poster-grid">
           <li v-for="film in selected.films" :key="film.id" class="poster-cell">
             <div class="poster-frame">
-              <img
-                v-if="film.poster"
-                :src="film.poster"
-                :alt="film.name"
-                class="poster-img"
-                loading="lazy"
-              />
+              <img v-if="film.poster" :src="film.poster" :alt="film.name" class="poster-img" loading="lazy" />
               <div v-else class="poster-missing">No poster</div>
             </div>
             <div class="poster-caption">
@@ -50,34 +55,81 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, reactive, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import * as d3 from 'd3'
-import margotRobbieGraph from '../data/margotRobbieGraph.json'
+import index from '../data/actorGraphs.index.json'
+
+const props = defineProps({
+  slug: { type: String, default: 'margot-robbie' },
+})
+
+const graphData = ref(null)
+
+async function loadGraph(slug) {
+  const entry = index.actors.find(a => a.slug === slug) || index.actors[0]
+  const modules = import.meta.glob('../data/*Graph.json')
+  const path = `../data/${entry.file}`
+  const loader = modules[path]
+  if (!loader) {
+    console.error('Actor graph file not found:', path)
+    return null
+  }
+  const mod = await loader()
+  return mod.default
+}
 
 const svgEl = ref(null)
 const tooltip = reactive({ visible: false, x: 0, y: 0, name: '', roleLabel: '', sharedLabel: '' })
 const selected = ref(null)
-const targetName = margotRobbieGraph.meta?.target ?? 'Margot Robbie'
+const targetName = computed(() => graphData.value?.meta?.target ?? '')
+
+const totalFilms = computed(() => graphData.value?.meta?.totalFilms ?? 0)
+const collaboratorCount = computed(() =>
+  graphData.value?.nodes?.filter(n => n.role !== 'center').length ?? 0
+)
+
+const numberWord = (n) => {
+  const words = ['zero','one','two','three','four','five','six','seven','eight','nine','ten',
+    'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen']
+  const tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety']
+  if (n < 0) return String(n)
+  if (n < 20) return words[n]
+  if (n < 100) {
+    const t = tens[Math.floor(n / 10)]
+    const o = n % 10
+    return o === 0 ? t : `${t}-${words[o]}`
+  }
+  return String(n)
+}
+
+const totalFilmsWord = computed(() => `their ${numberWord(totalFilms.value)}`)
 
 const subtitleFor = (node) => {
   if (node.role === 'center') {
     return `${node.films?.length ?? 0} films in this dataset`
   }
   const n = node.sharedFilms ?? node.films?.length ?? 0
-  return `${n} shared film${n === 1 ? '' : 's'} with ${targetName}`
+  return `${n} shared film${n === 1 ? '' : 's'} with ${targetName.value}`
 }
 
 const handleKey = (e) => {
   if (e.key === 'Escape') selected.value = null
 }
 
-const COLORS = {
-  center: '#E8E4D9',
-  actor: '#8892A6',
-  director: '#C9A36A',
+function readVar(name) {
+  if (typeof document === 'undefined') return ''
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
 }
 
-const EDGE_STROKE = 'rgba(255, 255, 255, 0.18)'
+function nodeColor(role) {
+  if (role === 'director') return readVar('--accent')
+  return readVar('--ink')
+}
+function nodeOpacity(role) {
+  return role === 'center' || role === 'director' ? 1 : 0.92
+}
+function edgeStroke() { return readVar('--rule') }
+function bgColor() { return readVar('--bg') }
 const EDGE_WIDTH = 1
 const BBOX_PAD_X = 4
 const BBOX_PAD_Y = 2
@@ -94,8 +146,8 @@ const roleLabel = (role) =>
   role === 'center' ? 'Lead' : role === 'director' ? 'Director' : 'Actor'
 
 const fontSize = (node) => {
-  if (node.role === 'center') return 34
-  return 13 + (node.sharedFilms ?? 1) * 5
+  if (node.role === 'center') return 42
+  return 13 + (node.sharedFilms ?? 1) * 4
 }
 
 let simulation = null
@@ -123,7 +175,7 @@ function initialPositions() {
   const linkDistance = Math.min(viewport.effectiveWidth, height) * LINK_DISTANCE_RATIO
   const ringRadius = linkDistance
 
-  const nodes = margotRobbieGraph.nodes.map((n) => ({ ...n, fisheyeScale: 1 }))
+  const nodes = graphData.value.nodes.map((n) => ({ ...n, fisheyeScale: 1 }))
   const center = nodes.find((n) => n.role === 'center')
   const others = nodes.filter((n) => n.role !== 'center')
 
@@ -216,7 +268,7 @@ function render() {
 
   const { nodes, cx, cy, linkDistance } = initialPositions()
   graphNodes = nodes
-  const links = margotRobbieGraph.links.map((l) => ({
+  const links = graphData.value.links.map((l) => ({
     source: l.source,
     target: l.target,
   }))
@@ -237,13 +289,15 @@ function render() {
     .text((d) => d.name)
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'middle')
-    .attr('fill', (d) => COLORS[d.role])
+    .attr('fill', (d) => nodeColor(d.role))
+    .attr('fill-opacity', (d) => nodeOpacity(d.role))
     .attr('font-size', (d) => fontSize(d))
-    .attr('font-weight', (d) => (d.role === 'center' ? 700 : 500))
-    .attr('font-family', "'Inconsolata', 'Consolas', ui-monospace, monospace")
+    .attr('font-style', (d) => d.role === 'center' ? 'italic' : 'normal')
+    .attr('font-weight', 500)
+    .attr('font-family', (d) => d.role === 'center' ? "Cormorant Garamond, Georgia, serif" : "Inter, system-ui, sans-serif")
     .attr('letter-spacing', '0.01em')
     .attr('paint-order', 'stroke')
-    .attr('stroke', '#0B0D12')
+    .attr('stroke', bgColor())
     .attr('stroke-width', 4)
 
   textSel.each(function (d) {
@@ -258,7 +312,7 @@ function render() {
     .data(links)
     .enter()
     .append('line')
-    .attr('stroke', EDGE_STROKE)
+    .attr('stroke', edgeStroke())
     .attr('stroke-width', EDGE_WIDTH)
     .attr('stroke-linecap', 'round')
 
@@ -297,7 +351,7 @@ function render() {
       tooltip.sharedLabel =
         d.role === 'center'
           ? 'Focus of this graph'
-          : `${d.sharedFilms} shared film${d.sharedFilms === 1 ? '' : 's'} with ${targetName}`
+          : `${d.sharedFilms} shared film${d.sharedFilms === 1 ? '' : 's'} with ${targetName.value}`
     })
     .on('mousemove', (event) => {
       tooltip.x = event.clientX + 14
@@ -355,13 +409,20 @@ watch(selected, () => {
   shiftForSidebar()
 })
 
-onMounted(() => {
-  render()
-  resizeHandler = () => {
-    render()
-  }
+onMounted(async () => {
+  graphData.value = await loadGraph(props.slug)
+  if (graphData.value) render()
+  resizeHandler = () => { if (graphData.value) render() }
   window.addEventListener('resize', resizeHandler)
   window.addEventListener('keydown', handleKey)
+
+  const { theme } = useTheme()
+  watch(theme, () => { if (graphData.value) render() })
+})
+
+watch(() => props.slug, async (next) => {
+  graphData.value = await loadGraph(next)
+  if (graphData.value) render()
 })
 
 onBeforeUnmount(() => {
@@ -375,8 +436,33 @@ onBeforeUnmount(() => {
 .actor-graph-wrapper {
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse at center, #161922 0%, #0B0D12 100%);
-  font-family: 'Inconsolata', 'Consolas', ui-monospace, monospace;
+  background: var(--bg);
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+
+.page-header {
+  position: absolute;
+  top: 82px;
+  left: 48px;
+  z-index: 4;
+  max-width: 540px;
+  pointer-events: none;
+}
+
+.editorial-title {
+  font-size: 42px;
+}
+.editorial-title .emph {
+  font-style: italic;
+  color: var(--accent);
+}
+.lede {
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.45;
+  max-width: 440px;
+  margin: 6px 0 0;
 }
 
 .actor-graph-svg {
@@ -386,80 +472,54 @@ onBeforeUnmount(() => {
   cursor: default;
 }
 
-:deep(.node) {
-  cursor: grab;
-}
-
-:deep(.node:active) {
-  cursor: grabbing;
-}
-
-:deep(.node text) {
-  user-select: none;
-}
+:deep(.node) { cursor: grab; }
+:deep(.node:active) { cursor: grabbing; }
+:deep(.node text) { user-select: none; }
 
 .actor-tooltip {
   position: fixed;
   pointer-events: none;
-  background: #11141B;
-  color: #E8E4D9;
+  background: var(--bg-elevated);
+  color: var(--ink);
   padding: 10px 14px;
-  border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: 'Inconsolata', 'Consolas', ui-monospace, monospace;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  font-family: var(--font-sans);
   font-size: 13px;
   z-index: 1100;
   max-width: 280px;
-  letter-spacing: 0.02em;
+  box-shadow: 0 6px 20px rgba(20, 17, 13, 0.12);
 }
+.tooltip-name { font-weight: 600; margin-bottom: 3px; }
+.tooltip-meta { color: var(--ink-muted); font-size: 12px; }
 
-.tooltip-name {
-  font-weight: 700;
-  margin-bottom: 3px;
-}
-
-.tooltip-meta {
-  color: rgba(232, 228, 217, 0.6);
-  font-size: 12px;
-}
-
-.legend {
-  position: fixed;
-  left: 28px;
-  bottom: 28px;
-  background: rgba(11, 13, 18, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 24px 28px;
-  color: rgba(232, 228, 217, 0.9);
-  font-family: 'Inconsolata', 'Consolas', ui-monospace, monospace;
-  font-size: 24px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.page-footer {
+  position: absolute;
+  bottom: 22px;
+  left: 48px;
+  right: 48px;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.legend-row {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  z-index: 4;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  pointer-events: none;
 }
-
+.legend { display: flex; gap: 22px; }
 .legend-dot {
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
+  margin-right: 8px;
 }
-
-.legend-actor {
-  background: #8892A6;
-}
-
-.legend-director {
-  background: #C9A36A;
-}
+.legend-actor { background: var(--ink); }
+.legend-director { background: var(--accent); }
+.totals { font-variant-numeric: tabular-nums; }
 
 .sidebar {
   position: fixed;
@@ -468,54 +528,35 @@ onBeforeUnmount(() => {
   bottom: 0;
   width: 420px;
   max-width: 92vw;
-  background: #0E1118;
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 72px 40px 40px;
-  color: #E8E4D9;
-  font-family: 'Inconsolata', 'Consolas', ui-monospace, monospace;
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--rule);
+  padding: 96px 40px 40px;
+  color: var(--ink);
+  font-family: var(--font-sans);
   z-index: 1200;
   overflow-y: auto;
-  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.45);
+  box-shadow: -20px 0 60px rgba(20, 17, 13, 0.18);
 }
 
 .sidebar-close {
   position: absolute;
-  top: 24px;
+  top: 84px;
   right: 24px;
-  background: transparent;
-  border: none;
-  color: rgba(232, 228, 217, 0.55);
-  font-size: 18px;
-  cursor: pointer;
+  font-size: 22px;
+  color: var(--ink-muted);
   padding: 6px 10px;
-  font-family: inherit;
+  border-radius: 999px;
 }
+.sidebar-close:hover { color: var(--ink); background: var(--accent-soft); }
 
-.sidebar-close:hover {
-  color: #E8E4D9;
-}
-
-.sidebar-role {
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(232, 228, 217, 0.45);
-  margin-bottom: 12px;
-}
-
-.sidebar-name {
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  margin: 0 0 8px;
-  line-height: 1.15;
-}
-
+.sidebar-role { margin-bottom: 10px; }
+.sidebar-name { font-size: 36px; margin: 0 0 8px; line-height: 1.1; }
 .sidebar-subtitle {
-  font-size: 14px;
-  color: rgba(232, 228, 217, 0.6);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-muted);
   margin-bottom: 28px;
-  letter-spacing: 0.03em;
 }
 
 .poster-grid {
@@ -526,69 +567,29 @@ onBeforeUnmount(() => {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px 16px;
 }
-
-.poster-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
+.poster-cell { display: flex; flex-direction: column; gap: 8px; }
 .poster-frame {
   width: 100%;
   aspect-ratio: 2 / 3;
-  background: #1A1E28;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg);
+  border: 1px solid var(--rule);
   overflow: hidden;
   position: relative;
+  border-radius: 2px;
 }
-
-.poster-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
+.poster-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .poster-missing {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(232, 228, 217, 0.35);
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-faint);
   font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
+.poster-caption { display: flex; flex-direction: column; gap: 2px; font-size: 13px; line-height: 1.35; }
+.poster-year { color: var(--ink-faint); font-variant-numeric: tabular-nums; font-size: 11px; letter-spacing: 0.1em; }
+.poster-title { color: var(--ink); }
 
-.poster-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 13px;
-  line-height: 1.35;
-  letter-spacing: 0.01em;
-}
-
-.poster-year {
-  color: rgba(232, 228, 217, 0.45);
-  font-variant-numeric: tabular-nums;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-}
-
-.poster-title {
-  color: #E8E4D9;
-}
-
-.sidebar-enter-active,
-.sidebar-leave-active {
-  transition: transform 240ms ease, opacity 240ms ease;
-}
-
-.sidebar-enter-from,
-.sidebar-leave-to {
-  transform: translateX(24px);
-  opacity: 0;
-}
+.sidebar-enter-active, .sidebar-leave-active { transition: transform 240ms ease, opacity 240ms ease; }
+.sidebar-enter-from, .sidebar-leave-to { transform: translateX(24px); opacity: 0; }
 </style>

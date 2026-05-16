@@ -22,6 +22,13 @@ const props = defineProps({
   }
 })
 
+const { theme } = useTheme()
+
+function readVar(name) {
+  if (typeof document === 'undefined') return ''
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+}
+
 const emit = defineEmits(['country-clicked'])
 const globeEl = ref(null)
 const errorMsg = ref('')
@@ -29,12 +36,12 @@ let globeInst = null
 let currentHoverD = null
 
 const getPolygonColor = (d) => {
-  const isSelected = props.selectedCountry && props.selectedCountry.properties && props.selectedCountry.properties.ADMIN === d.properties.ADMIN
+  const isSelected = props.selectedCountry?.properties?.ADMIN === d.properties.ADMIN
   const isHovered = currentHoverD === d
-  
-  if (isSelected) return 'rgba(255, 183, 77, 0.8)' // Stronger orange for selected
-  if (isHovered) return 'rgba(255, 183, 77, 0.35)' // Discrete transparent orange for hover
-  return '#cccccc' // Default light grey
+
+  if (isSelected) return readVar('--globe-selected')
+  if (isHovered) return readVar('--globe-hover')
+  return readVar('--globe-land')
 }
 
 onMounted(async () => {
@@ -55,7 +62,16 @@ onMounted(async () => {
       .polygonAltitude(0.01) // Restored static altitude to guarantee stability!
       .polygonCapColor(getPolygonColor)
       .polygonSideColor(() => 'rgba(0,0,0,0)') 
-      .polygonStrokeColor(() => '#444444')
+      .polygonStrokeColor(() => readVar('--globe-stroke'))
+
+    function applyMaterial() {
+      const material = globeInst.globeMaterial()
+      if (material?.color) material.color.set(readVar('--globe-bg-mid'))
+      globeInst.polygonStrokeColor(() => readVar('--globe-stroke'))
+      globeInst.polygonCapColor(getPolygonColor)
+    }
+
+    applyMaterial()
 
     globeInst.onPolygonHover(hoverD => {
         if (props.selectedCountry) return // Disable hover interaction while zoomed in
@@ -71,11 +87,6 @@ onMounted(async () => {
         if (props.selectedCountry) return // Disable new clicks while zoned in
         emit('country-clicked', d)
       });
-
-    const material = globeInst.globeMaterial();
-    if (material && material.color) {
-      material.color.set('#eaeaea'); 
-    }
 
     const resizeListener = () => {
       globeInst.width(window.innerWidth).height(window.innerHeight)
@@ -100,6 +111,10 @@ onMounted(async () => {
     }, 200);
     
     globeInst._resizeListener = resizeListener
+
+    watch(theme, () => {
+      if (globeInst) applyMaterial()
+    })
   } catch (err) {
     console.error("Error loading Globe data:", err)
     errorMsg.value = err.toString() + '\n' + (err.stack || '')
@@ -144,7 +159,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   z-index: 1;
-  background: radial-gradient(circle at 50% 50%, #42526a 0%, #020617 100%);
+  background: radial-gradient(circle at 50% 50%, var(--globe-bg-from) 0%, var(--globe-bg-to) 100%);
 }
 
 .globe-container:active {

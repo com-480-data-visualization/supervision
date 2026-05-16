@@ -1,26 +1,98 @@
+/* =============================================================
+   Theme tokens
+   ============================================================= */
 :root {
-  --bg-color: #f5f5f5; /* Off-white */
-  --font-base: 'Roboto', sans-serif;
-  --font-condensed: 'Roboto Condensed', sans-serif;
-  --text-color: #1a1a1a;
+  --bg: #faf6ef;
+  --bg-elevated: #ffffff;
+  --ink: #14110d;
+  --ink-muted: #57534e;
+  --ink-faint: #78716c;
+  --rule: rgba(20, 17, 13, 0.08);
+  --accent: #c2410c;
+  --accent-soft: rgba(194, 65, 12, 0.12);
+
+  /* Globe canvas-specific (the planet surface needs different swatches
+     than the chrome around it). */
+  --globe-bg-from: #f5efe0;
+  --globe-bg-mid: #faf6ef;
+  --globe-bg-to: #f0e9d8;
+  --globe-land: rgba(20, 17, 13, 0.78);
+  --globe-stroke: rgba(20, 17, 13, 0.9);
+  --globe-hover: rgba(194, 65, 12, 0.4);
+  --globe-selected: #c2410c;
+
+  /* Fonts */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
+
+[data-theme="dark"] {
+  --bg: #14110d;
+  --bg-elevated: #1c1812;
+  --ink: #f5efe0;
+  --ink-muted: rgba(245, 239, 224, 0.55);
+  --ink-faint: rgba(245, 239, 224, 0.35);
+  --rule: rgba(245, 239, 224, 0.08);
+  --accent: #e07a3a;
+  --accent-soft: rgba(224, 122, 58, 0.18);
+
+  --globe-bg-from: #1a2030;
+  --globe-bg-mid: #0f131e;
+  --globe-bg-to: #08090d;
+  --globe-land: rgba(245, 239, 224, 0.12);
+  --globe-stroke: rgba(245, 239, 224, 0.22);
+  --globe-hover: rgba(224, 122, 58, 0.45);
+  --globe-selected: #e07a3a;
+}
+
+/* =============================================================
+   Reset + base
+   ============================================================= */
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-color);
-  font-family: var(--font-base);
-  color: var(--text-color);
-  overflow: hidden; /* Prevent scrolling when rotating globe */
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  overflow: hidden; /* Many pages are fixed-viewport canvases. */
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
-#__nuxt {
-  width: 100%;
-  height: 100%;
+#__nuxt { width: 100%; height: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: inherit;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
 }
 
-.condensed-text {
-  font-family: var(--font-condensed);
+/* =============================================================
+   Editorial helpers
+   ============================================================= */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.editorial-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  margin: 0;
 }

@@ -2,36 +2,38 @@
   <Transition name="fade">
     <div v-if="isVisible" class="overlay-backdrop" @click="close">
       <div class="overlay-modal" @click.stop>
-        <div class="modal-header">
-          <div class="title-container">
-            <img v-if="flagUrl" :src="flagUrl" class="country-flag" />
-            <h1 class="condensed-text">{{ countryProps?.ADMIN || 'Unknown' }}</h1>
-          </div>
-          <button class="close-button" @click="close" aria-label="Close">×</button>
-        </div>
-        <div class="modal-body">
-          <!-- Loading & Empty States -->
-          <p v-if="movies.length === 0 && !loading">No movies found for this country yet.</p>
-          <p v-if="movies.length === 0 && loading">Loading movies...</p>
-          
-          <!-- Movie List -->
-          <div class="movie-list" style="display: flex; flex-direction: column; gap: 1rem;">
-            <div v-for="movie in movies" :key="movie.id" style="border-bottom: 1px solid #ccc; padding-bottom: 1rem;">
-              <h3 style="margin: 0; color: #ffb74d;">{{ movie.name }} ({{ movie.date }})</h3>
-              <p style="margin: 5px 0;">Rating: {{ movie.rating || 'N/A' }} / 5</p>
-              <p style="margin: 0; font-size: 0.9rem;">{{ movie.description }}</p>
+        <header class="modal-header">
+          <div class="title-row">
+            <img v-if="flagUrl" :src="flagUrl" class="country-flag" alt="" />
+            <div class="title-stack">
+              <div class="eyebrow">Films from</div>
+              <h1 class="editorial-title">{{ countryProps?.ADMIN || 'Unknown' }}</h1>
             </div>
           </div>
-          
-          <!-- "Show More" Pagination Button -->
-          <button 
-            v-if="hasMore && movies.length > 0" 
-            @click="fetchMovies" 
+          <button class="close-button" @click="close" aria-label="Close">×</button>
+        </header>
+
+        <div class="modal-body">
+          <p v-if="movies.length === 0 && !loading" class="empty">No movies found for this country yet.</p>
+          <p v-if="movies.length === 0 && loading" class="empty">Loading films…</p>
+
+          <ol class="movie-list">
+            <li v-for="movie in movies" :key="movie.id" class="movie-row">
+              <div class="movie-year">{{ movie.date || '—' }}</div>
+              <div class="movie-meta">
+                <div class="movie-title">{{ movie.name }}</div>
+                <div class="movie-desc">{{ movie.description }}</div>
+              </div>
+              <div class="movie-rating">{{ movie.rating ?? '—' }}</div>
+            </li>
+          </ol>
+
+          <button
+            v-if="hasMore && movies.length > 0"
+            class="more-button"
             :disabled="loading"
-            style="margin-top: 1.5rem; padding: 10px 20px; font-size: 1rem; cursor: pointer; border-radius: 8px;"
-          >
-            {{ loading ? 'Loading 25 more...' : 'Show More (25)' }}
-          </button>
+            @click="fetchMovies"
+          >{{ loading ? 'Loading…' : 'Show 25 more' }}</button>
         </div>
       </div>
     </div>
@@ -107,91 +109,135 @@ const close = () => {
 
 <style scoped>
 .overlay-backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(20, 17, 13, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 80px 24px 24px;
 }
 
 .overlay-modal {
-  width: 80%;
-  height: 80%;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+  width: min(960px, 92vw);
+  max-height: calc(100vh - 120px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(20, 17, 13, 0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  backdrop-filter: blur(10px);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 40px;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 28px 40px;
+  border-bottom: 1px solid var(--rule);
 }
 
-.title-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+.title-row { display: flex; align-items: center; gap: 24px; }
 
 .country-flag {
-  height: 45px;
+  height: 44px;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(20, 17, 13, 0.12);
   object-fit: cover;
 }
 
-.modal-header h1 {
-  margin: 0;
-  font-size: 3rem;
-  color: #1a1a1a;
-  line-height: 1;
-}
+.title-stack .eyebrow { margin-bottom: 4px; }
+.title-stack .editorial-title { font-size: 40px; }
 
 .close-button {
-  background: none;
-  border: none;
-  font-size: 3rem;
+  font-size: 28px;
+  color: var(--ink-muted);
   line-height: 1;
-  cursor: pointer;
-  color: #888;
-  transition: color 0.2s, transform 0.2s;
-  padding: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  transition: color 150ms ease, background 150ms ease;
 }
-
-.close-button:hover {
-  color: #333;
-  transform: scale(1.1);
-}
+.close-button:hover { color: var(--ink); background: var(--accent-soft); }
 
 .modal-body {
-  padding: 40px;
-  flex: 1;
+  padding: 24px 40px 32px;
   overflow-y: auto;
-  font-size: 1.2rem;
-  color: #444;
+  flex: 1;
 }
 
-/* Transition for smooth appearance/disappearance */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.4s ease, transform 0.4s ease;
+.empty {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--ink-muted);
+  text-align: center;
+  margin: 48px 0;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
+.movie-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
+
+.movie-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: baseline;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.movie-row:last-child { border-bottom: none; }
+
+.movie-year {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.movie-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.movie-desc {
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.movie-rating {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.more-button {
+  margin-top: 28px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--accent);
+}
+.more-button:disabled { color: var(--ink-faint); border-color: var(--ink-faint); cursor: wait; }
+
+/* Transition */
+.fade-enter-active, .fade-leave-active { transition: opacity 0.25s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>
