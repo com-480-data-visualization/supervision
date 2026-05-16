@@ -21,7 +21,7 @@ export default defineCachedEventHandler(async (event) => {
     } catch {}
 
     try {
-        const r = await db.execute({ sql: 'SELECT name FROM crew WHERE id = ? AND role = "Director" LIMIT 1', args: [id] })
+        const r = await db.execute({ sql: "SELECT name FROM crew WHERE id = ? AND role = 'Director' LIMIT 1", args: [id] })
         director = r.rows[0]?.name ?? null
     } catch {}
 

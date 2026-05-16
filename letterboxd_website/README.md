@@ -39,6 +39,19 @@ Use this when you have the raw dataset CSVs and want to change the schema or ref
 
 `db:setup` drops + recreates the tables, loads the CSVs, populates `countries.admin` from the geojson + a small alias dictionary in `scripts/lib/optimizations.mjs`, builds the indexes and the pre-aggregated `top_movies_by_country` table (top 100 rated films per country). ~1 minute end-to-end.
 
+### Path C — Add tables to an existing DB
+
+Use this when you already have `data/local.db` (from `db:fetch`) and want to add new tables without a full rebuild.
+
+1. Put the relevant CSVs in `letterboxd_website/data/`.
+2. Run:
+
+   ```bash
+   npm run db:extend
+   ```
+
+To add a new table, add an entry to the `TABLES` array in `scripts/extend-db.mjs` and a matching index in `POST_DDL`.
+
 ### Publishing a new pre-built DB
 
 After running `db:setup`, package the result:
@@ -81,3 +94,4 @@ npm run preview
 | `npm run db:setup` | Rebuild `data/local.db` from CSVs (includes admin mapping + indexes + pre-agg) |
 | `npm run db:archive` | Compress `data/local.db` → `dist/letterboxd.db.gz` for upload |
 | `npm run db:publish` | Archive + upload the snapshot to the `latest` GitHub Release (needs `gh`) |
+| `npm run db:extend` | Add actors, crew, and posters tables to an existing `data/local.db` |
