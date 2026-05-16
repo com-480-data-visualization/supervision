@@ -54,6 +54,37 @@ const TABLES = [
       ['country', 'text'],
     ],
   },
+  {
+    name: 'posters',
+    csv: resolve(dataDir, 'posters.csv'),
+    ddl: `CREATE TABLE posters (id INTEGER, link TEXT)`,
+    insert: 'INSERT INTO posters (id, link) VALUES (?, ?)',
+    columns: [
+      ['id', 'int'],
+      ['link', 'text'],
+    ],
+  },
+  {
+    name: 'actors',
+    csv: resolve(dataDir, 'actors.csv'),
+    ddl: `CREATE TABLE actors (id INTEGER, name TEXT)`,
+    insert: 'INSERT INTO actors (id, name) VALUES (?, ?)',
+    columns: [
+      ['id', 'int'],
+      ['name', 'text'],
+    ],
+  },
+  {
+    name: 'crew',
+    csv: resolve(dataDir, 'crew.csv'),
+    ddl: `CREATE TABLE crew (id INTEGER, name TEXT, role TEXT)`,
+    insert: 'INSERT INTO crew (id, name, role) VALUES (?, ?, ?)',
+    columns: [
+      ['id', 'int'],
+      ['name', 'text'],
+      ['role', 'text'],
+    ],
+  },
 ]
 
 // Letterboxd-DB country string → Natural Earth ADMIN. Only entries where the

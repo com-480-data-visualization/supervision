@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="header-right">
-            <div class="sort-controls">
+            <div class="sort-controls" v-show="!selectedMovie">
               <span class="sort-label">Sort</span>
               <button class="sort-btn" :class="{ active: sortField === 'rating' }" @click="setSort('rating')">Rating {{ sortField === 'rating' ? (sortDir === 'desc' ? '↓' : '↑') : '↓' }}</button>
               <button class="sort-btn" :class="{ active: sortField === 'date' }"   @click="setSort('date')">Year {{ sortField === 'date' ? (sortDir === 'desc' ? '↓' : '↑') : '↓' }}</button>
@@ -21,11 +21,13 @@
         </header>
 
         <div class="modal-body">
+          <MovieDetail v-if="selectedMovie" :movie="selectedMovie" @back="selectedMovie = null" />
+          <template v-else>
           <p v-if="movies.length === 0 && !loading" class="empty">No movies found for this country yet.</p>
           <p v-if="movies.length === 0 && loading" class="empty">Loading films…</p>
 
           <ol class="movie-list">
-            <li v-for="movie in sortedMovies" :key="movie.id" class="movie-row">
+            <li v-for="movie in sortedMovies" :key="movie.id" class="movie-row" @click="selectedMovie = movie">
               <div class="movie-year">{{ movie.date || '—' }}</div>
               <div class="movie-meta">
                 <div class="movie-title">{{ movie.name }}</div>
@@ -41,6 +43,7 @@
             :disabled="loading"
             @click="fetchMovies"
           >{{ loading ? 'Loading…' : 'Show 25 more' }}</button>
+          </template>
         </div>
       </div>
     </div>
@@ -104,6 +107,7 @@ watch(() => props.isVisible, (newVal) => {
     movies.value = []
     afterRank.value = 0
     hasMore.value = true
+    selectedMovie.value = null
     fetchMovies()
   }
 })
@@ -111,6 +115,8 @@ watch(() => props.isVisible, (newVal) => {
 const close = () => {
   emit('close')
 }
+
+const selectedMovie = ref(null)
 
 // --- SORT LOGIC ---
 const sortField = ref('rating')
@@ -218,7 +224,9 @@ const sortedMovies = computed(() => {
   gap: 20px;
   padding: 16px 0;
   border-bottom: 1px solid var(--rule);
+  cursor: pointer;
 }
+.movie-row:hover .movie-title { color: var(--accent); }
 .movie-row:last-child { border-bottom: none; }
 
 .movie-year {
