@@ -8,7 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "build:graph": "node scripts/build-actor-graph.mjs"
+    "db:fetch": "node scripts/fetch-data.mjs",
+    "db:setup": "node scripts/setup-db.mjs",
+    "db:archive": "node scripts/build-archive.mjs"
   },
   "dependencies": {
     "@libsql/client": "^0.17.2",

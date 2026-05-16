@@ -1,75 +1,83 @@
-# Nuxt Minimal Starter
+# Letterboxd Website
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt app that visualises the Letterboxd dataset (~941K films) as a 3D globe and an actor graph.
 
 ## Setup
 
-Make sure to install dependencies:
+```bash
+npm install
+```
+
+## Database
+
+The site reads from a SQLite file at `data/local.db`. There are two ways to populate it.
+
+### Path A — Download the pre-built DB
+
+The repo contains an already-seeded DB as a GitHub Release asset. To hydrate your local copy:
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npm run db:fetch
+npm run dev
 ```
+
+`db:fetch` downloads the asset from the URL hard-coded in `scripts/fetch-data.mjs` (a `DB_DOWNLOAD_URL` env var overrides it), gunzips it, and writes `data/local.db`. ~130 MB download, no credentials needed.
+
+### Path B — Rebuild from CSVs
+
+Use this when you have the raw dataset CSVs and want to change the schema or refresh the data.
+
+1. Put the CSVs at `letterboxd_website/data/`:
+   - `movies.csv` (`id, name, date, tagline, description, minute, rating`)
+   - `countries.csv` (`id, country`)
+2. Run:
+
+   ```bash
+   npm run db:setup
+   ```
+
+`db:setup` drops + recreates the tables, loads the CSVs, populates `countries.admin` from the geojson + a small alias dictionary in `scripts/lib/optimizations.mjs`, builds the indexes and the pre-aggregated `top_movies_by_country` table (top 100 rated films per country). ~1 minute end-to-end.
+
+### Publishing a new pre-built DB
+
+After running `db:setup`, package the result:
+
+```bash
+npm run db:archive
+```
+
+That creates `dist/letterboxd.db.gz` from the `data/local.db` file (~130 MB). Upload it to the `latest` GitHub Release via the web UI:
+
+1. Open the repo's Releases page.
+2. Edit the release tagged `latest` (or create it the first time and tag it `latest`).
+3. Drag-and-drop `dist/letterboxd.db.gz` to replace the existing asset.
+4. Save.
+
+The `releases/download/latest/letterboxd.db.gz` URL that `db:fetch` reads keeps pointing at the most recent asset.
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
-
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Open <http://localhost:3000>.
 
-Build the application for production:
+## Production Build
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Nuxt dev server |
+| `npm run build` | Production build |
+| `npm run db:fetch` | Download the pre-built SQLite DB from GitHub Releases |
+| `npm run db:setup` | Rebuild `data/local.db` from CSVs (includes admin mapping + indexes + pre-agg) |
+| `npm run db:archive` | Compress `data/local.db` → `dist/letterboxd.db.gz` for upload |
+| `npm run db:publish` | Archive + upload the snapshot to the `latest` GitHub Release (needs `gh`) |

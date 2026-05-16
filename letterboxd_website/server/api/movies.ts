@@ -1,32 +1,50 @@
-export default defineEventHandler(async (event) => {
+const PAGE_SIZE = 25;
+
+export default defineCachedEventHandler(async (event) => {
     const query = getQuery(event);
-    const countryName = query.country as string;
-    const offset = parseInt(query.offset as string) || 0;
+    const admin = query.country as string;
+    const afterRank = parseInt(query.afterRank as string) || 0;
 
-    if (!countryName) return [];
+    if (!admin) return { rows: [], hasMore: false };
 
-    const db = useTurso();
+    setHeader(
+        event,
+        "Cache-Control",
+        "public, max-age=3600, stale-while-revalidate=86400",
+    );
+
+    const db = useDb();
 
     try {
         const result = await db.execute({
             sql: `
-        SELECT m.id, m.name, m.rating, m.date, m.description
-        FROM movies m
-        JOIN countries c ON m.id = c.id
-        WHERE LOWER(c.country) = LOWER(?)
-        AND m.rating IS NOT NULL 
-        AND m.rating > 0  
-        AND m.rating != ''   
-        AND m.rating != ' '    
-        ORDER BY m.rating DESC
-        LIMIT 25 OFFSET ?;
+        SELECT id, name, rating, date, description, rank
+        FROM top_movies_by_country
+        WHERE admin = ? COLLATE NOCASE
+          AND rank > ?
+        ORDER BY rank
+        LIMIT ?;
       `,
-            args: [countryName, offset]
+            args: [admin, afterRank, PAGE_SIZE + 1],
         });
 
-        return result.rows;
+        const rows = result.rows;
+        const hasMore = rows.length > PAGE_SIZE;
+        return {
+            rows: hasMore ? rows.slice(0, PAGE_SIZE) : rows,
+            hasMore,
+        };
     } catch (err) {
         console.error(err);
         throw createError({ statusCode: 500, statusMessage: "DB Error" });
     }
+}, {
+    maxAge: 60 * 60,
+    swr: true,
+    getKey: (event) => {
+        const q = getQuery(event);
+        const admin = ((q.country as string) || "").toLowerCase();
+        const afterRank = parseInt(q.afterRank as string) || 0;
+        return `movies:${admin}:${afterRank}`;
+    },
 });

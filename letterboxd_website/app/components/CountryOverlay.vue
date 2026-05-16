@@ -62,28 +62,27 @@ const flagUrl = computed(() => {
 
 // --- MOVIE FETCHING LOGIC ---
 const movies = ref([])
-const offset = ref(0)
+const afterRank = ref(0)
 const loading = ref(false)
 const hasMore = ref(true)
 
 const fetchMovies = async () => {
   if (!countryName.value || loading.value || !hasMore.value) return
-  
+
   loading.value = true
   try {
-    const data = await $fetch('/api/movies', {
-      params: { 
-        country: countryName.value, 
-        offset: offset.value 
-      }
+    const res = await $fetch('/api/movies', {
+      params: {
+        country: countryName.value,
+        afterRank: afterRank.value,
+      },
     })
-    
-    if (data.length < 25) {
-      hasMore.value = false 
+
+    movies.value.push(...res.rows)
+    hasMore.value = res.hasMore
+    if (res.rows.length > 0) {
+      afterRank.value = res.rows[res.rows.length - 1].rank
     }
-    
-    movies.value.push(...data) 
-    offset.value += 25 
   } catch (err) {
     console.error("Failed to fetch movies", err)
   } finally {
@@ -91,11 +90,10 @@ const fetchMovies = async () => {
   }
 }
 
-// Every time the overlay opens, clear the previous list and fetch the first 25
 watch(() => props.isVisible, (newVal) => {
   if (newVal) {
     movies.value = []
-    offset.value = 0
+    afterRank.value = 0
     hasMore.value = true
     fetchMovies()
   }
