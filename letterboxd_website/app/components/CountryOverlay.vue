@@ -26,8 +26,21 @@
           <p v-if="movies.length === 0 && !loading" class="empty">No movies found for this country yet.</p>
           <p v-if="movies.length === 0 && loading" class="empty">Loading films…</p>
 
+          <div v-if="movies.length > 0" class="filter-bar">
+            <input
+              v-model="filterQuery"
+              @input="filterHighlight = 0"
+              @keydown="onFilterKey"
+              placeholder="Filter films…"
+              class="filter-input"
+              type="text"
+            />
+          </div>
+
           <ol class="movie-list">
-            <li v-for="movie in sortedMovies" :key="movie.id" class="movie-row" @click="selectedMovie = movie">
+            <li v-for="(movie, i) in filteredMovies" :key="movie.id"
+              class="movie-row" :class="{ highlighted: i === filterHighlight }"
+              @click="selectedMovie = movie" @mouseenter="filterHighlight = i">
               <div class="movie-year">{{ movie.date || '—' }}</div>
               <div class="movie-meta">
                 <div class="movie-title">{{ movie.name }}</div>
@@ -39,7 +52,7 @@
           </ol>
 
           <button
-            v-if="hasMore && movies.length > 0"
+            v-if="hasMore && movies.length > 0 && !filterQuery"
             class="more-button"
             :disabled="loading"
             @click="fetchMovies"
@@ -56,7 +69,8 @@ import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   country: { type: Object, default: null },
-  isVisible: { type: Boolean, default: false }
+  isVisible: { type: Boolean, default: false },
+  preselectedMovie: { type: Object, default: null },
 })
 
 const emit = defineEmits(['close'])
@@ -108,7 +122,9 @@ watch(() => props.isVisible, (newVal) => {
     movies.value = []
     afterRank.value = 0
     hasMore.value = true
-    selectedMovie.value = null
+    filterQuery.value = ''
+    filterHighlight.value = 0
+    selectedMovie.value = props.preselectedMovie || null
     fetchMovies()
   }
 })
@@ -139,6 +155,30 @@ const sortedMovies = computed(() => {
     return sortDir.value === 'desc' ? bv - av : av - bv
   })
 })
+
+// --- FILTER LOGIC ---
+const filterQuery = ref('')
+const filterHighlight = ref(0)
+
+const filteredMovies = computed(() => {
+  const q = filterQuery.value.trim().toLowerCase()
+  if (!q) return sortedMovies.value
+  return sortedMovies.value.filter(m => m.name?.toLowerCase().includes(q))
+})
+
+const onFilterKey = (e) => {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault()
+    filterHighlight.value = Math.min(filterHighlight.value + 1, filteredMovies.value.length - 1)
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault()
+    filterHighlight.value = Math.max(filterHighlight.value - 1, 0)
+  } else if (e.key === 'Enter') {
+    e.preventDefault()
+    const movie = filteredMovies.value[filterHighlight.value]
+    if (movie) selectedMovie.value = movie
+  }
+}
 </script>
 
 
@@ -218,6 +258,22 @@ const sortedMovies = computed(() => {
   flex-direction: column;
 }
 
+.filter-bar { margin-bottom: 16px; }
+.filter-input {
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--bg-elevated);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+.filter-input::placeholder { color: var(--ink-faint); }
+.filter-input:focus { border-color: var(--accent); }
+
 .movie-row {
   display: grid;
   grid-template-columns: 64px 1fr auto;
@@ -227,7 +283,9 @@ const sortedMovies = computed(() => {
   border-bottom: 1px solid var(--rule);
   cursor: pointer;
 }
-.movie-row:hover .movie-title { color: var(--accent); }
+.movie-row:hover .movie-title,
+.movie-row.highlighted .movie-title { color: var(--accent); }
+.movie-row.highlighted { background: var(--accent-soft); margin: 0 -16px; padding: 16px; }
 .movie-row:last-child { border-bottom: none; }
 
 .movie-year {

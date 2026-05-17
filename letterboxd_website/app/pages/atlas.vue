@@ -1,8 +1,8 @@
 <template>
   <div class="atlas-page">
     <WorldGlobe :selectedCountry="selectedCountry" @country-clicked="onCountryClicked" />
-    <SearchBar @country-selected="onCountryClicked" v-show="!showOverlay" />
-    <CountryOverlay :country="selectedCountry" :isVisible="showOverlay" @close="closeOverlay" />
+    <SearchBar @country-selected="onCountryClicked" @movie-selected="onMovieSelected" v-show="!showOverlay" />
+    <CountryOverlay :country="selectedCountry" :isVisible="showOverlay" :preselectedMovie="preselectedMovie" @close="closeOverlay" />
     <div class="page-eyebrow eyebrow">No. 001 · The Atlas</div>
   </div>
 </template>
@@ -12,6 +12,7 @@ import { ref } from 'vue'
 
 const selectedCountry = ref(null)
 const showOverlay = ref(false)
+const preselectedMovie = ref(null)
 
 const onCountryClicked = (countryObj) => {
   if (!selectedCountry.value) {
@@ -24,8 +25,16 @@ const onCountryClicked = (countryObj) => {
   }
 }
 
+const onMovieSelected = ({ movie, country }) => {
+  if (!country) return
+  preselectedMovie.value = movie
+  selectedCountry.value = country
+  showOverlay.value = true
+}
+
 const closeOverlay = () => {
   showOverlay.value = false
+  preselectedMovie.value = null
   setTimeout(() => { selectedCountry.value = null }, 300)
 }
 </script>
