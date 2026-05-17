@@ -61,20 +61,22 @@ import index from '../data/actorGraphs.index.json'
 
 const props = defineProps({
   slug: { type: String, default: 'margot-robbie' },
+  personName: { type: String, default: '' },
 })
 
 const graphData = ref(null)
 
-async function loadGraph(slug) {
-  const entry = index.actors.find(a => a.slug === slug) || index.actors[0]
-  const modules = import.meta.glob('../data/*Graph.json')
-  const path = `../data/${entry.file}`
-  const loader = modules[path]
-  if (!loader) {
-    console.error('Actor graph file not found:', path)
-    return null
+async function loadGraph(slug, personName) {
+  const entry = index.actors.find(a => a.slug === slug)
+  if (entry) {
+    const modules = import.meta.glob('../data/*Graph.json')
+    const loader = modules[`../data/${entry.file}`]
+    if (loader) { const mod = await loader(); return mod.default }
   }
-  const mod = await loader()
+  if (personName) return $fetch(`/api/graph/${encodeURIComponent(personName)}`)
+  const fallback = index.actors[0]
+  const modules = import.meta.glob('../data/*Graph.json')
+  const mod = await modules[`../data/${fallback.file}`]()
   return mod.default
 }
 
@@ -410,7 +412,7 @@ watch(selected, () => {
 })
 
 onMounted(async () => {
-  graphData.value = await loadGraph(props.slug)
+  graphData.value = await loadGraph(props.slug, props.personName)
   if (graphData.value) render()
   resizeHandler = () => { if (graphData.value) render() }
   window.addEventListener('resize', resizeHandler)
@@ -421,7 +423,7 @@ onMounted(async () => {
 })
 
 watch(() => props.slug, async (next) => {
-  graphData.value = await loadGraph(next)
+  graphData.value = await loadGraph(next, props.personName)
   if (graphData.value) render()
 })
 

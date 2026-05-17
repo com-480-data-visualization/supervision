@@ -48,6 +48,8 @@ const POST_DDL = [
   `CREATE INDEX IF NOT EXISTS idx_posters_id ON posters(id)`,
   `CREATE INDEX IF NOT EXISTS idx_actors_id ON actors(id)`,
   `CREATE INDEX IF NOT EXISTS idx_crew_id_role ON crew(id, role)`,
+  `CREATE INDEX IF NOT EXISTS idx_actors_name ON actors(name)`,
+  `CREATE INDEX IF NOT EXISTS idx_crew_name_role ON crew(name, role)`,
 ];
 
 const BATCH_SIZE = 5000;

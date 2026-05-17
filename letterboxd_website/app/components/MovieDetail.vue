@@ -16,11 +16,17 @@
         <div class="detail-meta">
           <div class="meta-row">
             <span class="eyebrow">Director</span>
-            <span class="meta-value">{{ detail?.director || '—' }}</span>
+            <span v-if="detail?.director" class="meta-value meta-link" @click="goTo(detail.director)">{{ detail.director }}</span>
+            <span v-else class="meta-value">—</span>
           </div>
           <div class="meta-row">
             <span class="eyebrow">Cast</span>
-            <span class="meta-value">{{ detail?.actors?.join(', ') || '—' }}</span>
+            <span v-if="detail?.actors?.length" class="meta-value">
+              <span v-for="(actor, i) in detail.actors" :key="actor">
+                <span class="meta-link" @click="goTo(actor)">{{ actor }}</span>{{ i < detail.actors.length - 1 ? ', ' : '' }}
+              </span>
+            </span>
+            <span v-else class="meta-value">—</span>
           </div>
         </div>
       </div>
@@ -36,6 +42,12 @@ const props = defineProps({
 const emit = defineEmits(['back'])
 
 const { data: detail } = await useFetch(`/api/movie/${props.movie.id}`)
+
+const router = useRouter()
+
+const slugify = (name) => name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+
+const goTo = (name) => router.push({ path: `/constellations/${slugify(name)}`, query: { name } })
 </script>
 
 <style scoped>
@@ -105,4 +117,10 @@ const { data: detail } = await useFetch(`/api/movie/${props.movie.id}`)
   font-size: 16px;
   color: var(--ink);
 }
+
+.meta-link {
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+.meta-link:hover { color: var(--accent); }
 </style>

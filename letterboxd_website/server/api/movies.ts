@@ -18,11 +18,12 @@ export default defineCachedEventHandler(async (event) => {
     try {
         const result = await db.execute({
             sql: `
-        SELECT id, name, rating, date, description, rank
-        FROM top_movies_by_country
-        WHERE admin = ? COLLATE NOCASE
-          AND rank > ?
-        ORDER BY rank
+        SELECT t.id, t.name, t.rating, t.date, t.description, t.rank,
+          (SELECT name FROM crew WHERE id = t.id AND role = 'Director' LIMIT 1) as director
+        FROM top_movies_by_country t
+        WHERE t.admin = ? COLLATE NOCASE
+          AND t.rank > ?
+        ORDER BY t.rank
         LIMIT ?;
       `,
             args: [admin, afterRank, PAGE_SIZE + 1],

@@ -31,6 +31,7 @@
               <div class="movie-year">{{ movie.date || '—' }}</div>
               <div class="movie-meta">
                 <div class="movie-title">{{ movie.name }}</div>
+                <div v-if="movie.director" class="movie-director">{{ movie.director }}</div>
                 <div class="movie-desc">{{ movie.description }}</div>
               </div>
               <div class="movie-rating">{{ movie.rating ?? '—' }}</div>
@@ -244,6 +245,12 @@ const sortedMovies = computed(() => {
   color: var(--ink);
   margin-bottom: 2px;
 }
+.movie-director {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 2px;
+}
+
 .movie-desc {
   font-size: 13px;
   color: var(--ink-muted);
